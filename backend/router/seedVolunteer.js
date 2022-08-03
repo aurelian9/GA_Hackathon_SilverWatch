@@ -1,4 +1,4 @@
-[
+const seedVolunteer = [
   {
     email: "volunteer@volunteer.com",
     password: "example",
