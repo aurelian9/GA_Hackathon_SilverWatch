@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
 const Admin = require("../models/Admin");
+const Volunteer = require("../models/Volunteer");
+const Elder = require("../models/Elderly");
 const auth = require("../middleware/auth");
 
 let refreshTokens = [];
