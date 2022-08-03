@@ -45,4 +45,17 @@ router.get("/seed", async (req, res) => {
   });
 });
 
+// input: elderlyId
+router.patch("/help", async (req, res) => {
+  try {
+    const elderly = await Elderly.findOne({ _id: req.body.elderlyId });
+    elderly.isNeedHelp = false;
+    elderly.save();
+    res.status(200).json(elderly);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "error occurred" });
+  }
+});
+
 module.exports = router;
