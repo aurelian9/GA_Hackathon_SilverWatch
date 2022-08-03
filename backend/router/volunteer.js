@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
-const User = require("../models/User");
+const Volunteer = require("../models/Volunteer");
 const auth = require("../middleware/auth");
 
 let refreshTokens = [];
@@ -12,29 +12,29 @@ console.log(refreshTokens);
 
 router.post("/login", async (req, res) => {
   try {
-    // find user
-    const user = await User.findOne({ username: req.body.username });
+    // find volunteer
+    const volunteer = await Volunteer.findOne({ email: req.body.email });
 
-    // if user is not found, then return error message;
-    if (!user) {
+    // if volunteer is not found, then return error message;
+    if (!volunteer) {
       return res
         .status(400)
-        .json({ status: "error", message: "user is not found" });
+        .json({ status: "error", message: "volunteer is not found" });
     }
 
     // match the password
     const result = await bcrypt.compare(req.body.password, user.hash);
 
     if (!result) {
-      console.log("username or password error");
+      console.log("email or password error");
       return res
         .status(401)
-        .json({ status: "error", message: "username or password error" });
+        .json({ status: "error", message: "email or password error" });
     }
 
     const payload = {
-      id: user._id,
-      username: user.username,
+      id: volunteer._id,
+      email: volunteer.email,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -67,7 +67,7 @@ router.post("/refresh", (req, res) => {
 
     const payload = {
       id: decoded.id,
-      username: decoded.username,
+      email: decoded.email,
     };
 
     // create access token
@@ -85,24 +85,26 @@ router.post("/refresh", (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.email });
-    if (user) {
+    const volunteer = await Volunteer.findOne({ email: req.body.email });
+    if (volunteer) {
       return res
         .status(400)
-        .json({ status: "error", message: "user name is taken" });
+        .json({ status: "error", message: "email is taken" });
     }
 
     const hash = await bcrypt.hash(req.body.password, 12);
-    const createdUser = await User.create({
+    const createdVolunteer = await Volunteer.create({
       email: req.body.email,
       hash,
       name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      postalCode: req.body.postalCode,
     });
 
-    console.log("created user: ", createdUser);
-    res.json({ status: "ok", message: "user created" });
+    console.log("successfully registered: ", createdVolunteer);
+    res.json({ status: "ok", message: "successfully registered" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: "error", message: "an error has occured" });
