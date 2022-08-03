@@ -46,7 +46,7 @@ router.get("/seed", async (req, res) => {
 });
 
 // input: elderlyId
-router.patch("/help", async (req, res) => {
+router.patch("/help", auth, async (req, res) => {
   try {
     const elderly = await Elderly.findOne({ _id: req.body.elderlyId });
     elderly.isNeedHelp = false;
