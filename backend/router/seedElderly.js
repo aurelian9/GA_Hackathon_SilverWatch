@@ -1,2 +1,26 @@
-{
-}
+[
+  {
+    postalCode: 123456,
+    name: "Roger",
+    floor: "02",
+    unit: "15",
+    homeNumber: 62222222,
+    mobileNumber: 81234567,
+    medicalConditions: ["Heart Condition", "Stays Alone"],
+    bluetoothDeviceID: "1234",
+    statusList: [{ task: "Buy Food", isDone: false }],
+    volunteer_ids: [],
+  },
+  {
+    postalCode: 123456,
+    name: "Squirtle",
+    floor: "12",
+    unit: "15",
+    homeNumber: 61111111,
+    mobileNumber: 87654321,
+    medicalConditions: ["Feels Lonely", "Stays Alone"],
+    bluetoothDeviceID: "1234",
+    statusList: [{ task: "Buy Food", isDone: false }],
+    volunteer_ids: [],
+  },
+];
