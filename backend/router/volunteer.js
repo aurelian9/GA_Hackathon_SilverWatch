@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const volunteerSeed = require("./seedVolunteer");
+const seedVolunteer = require("./seedVolunteer");
 
 const Volunteer = require("../models/Volunteer");
 const auth = require("../middleware/auth");
@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
     }
 
     // match the password
-    const result = await bcrypt.compare(req.body.password, user.hash);
+    const result = await bcrypt.compare(req.body.password, volunteer.hash);
 
     if (!result) {
       console.log("email or password error");
@@ -121,15 +121,20 @@ router.delete("/logout", auth, async (req, res) => {
 router.get("/seed", async (req, res) => {
   await Volunteer.deleteMany();
 
-  seed.forEach((volunteer) => {
-    volunteer.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+  seedVolunteer.forEach((volunteer) => {
+    volunteer.hash = bcrypt.hashSync(volunteer.hash, bcrypt.genSaltSync(10));
   });
 
-  await Volunteer.create(seed, (err, createdVolunteers) => {
-    console.log(createdVolunteers);
-
-    res.status(200).json(createdVolunteers);
+  await Volunteer.create(seedVolunteer, (err, data) => {
+    if (err) {
+      console.log("GET /seed error: " + err.message);
+      res
+        .status(400)
+        .json({ status: "error", message: "seeding error occurred" });
+    } else {
+      res.json({ status: "ok", message: "seeding successful" });
+    }
   });
 });
 
-router.module.exports = router;
+module.exports = router;

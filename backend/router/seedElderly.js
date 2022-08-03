@@ -1,4 +1,4 @@
-[
+const seedElderly = [
   {
     postalCode: 123456,
     name: "Charmander",
@@ -8,8 +8,11 @@
     mobileNumber: 81234567,
     medicalConditions: ["Heart Condition", "Stays Alone"],
     bluetoothDeviceID: "1234",
-    statusList: [{ task: "Buy Food", isDone: false }],
+    taskList: [{ task: "Buy Food", isDone: false }],
     volunteer_ids: [],
+    isReviewed: false,
+    isDistressed: false,
+    isNeedHelp: false,
   },
   {
     postalCode: 123456,
@@ -20,11 +23,14 @@
     mobileNumber: 87654321,
     medicalConditions: ["Feels Lonely", "Staying Alive"],
     bluetoothDeviceID: "4321",
-    statusList: [
+    taskList: [
       { task: "Buy Food", isDone: false },
       { task: "See Doctor", isDone: false },
     ],
     volunteer_ids: [],
+    isReviewed: false,
+    isDistressed: false,
+    isNeedHelp: false,
   },
   {
     postalCode: 654321,
@@ -35,11 +41,14 @@
     mobileNumber: 12345678,
     medicalConditions: ["COPD", "Dementia"],
     bluetoothDeviceID: "1324",
-    statusList: [
+    taskList: [
       { task: "Shower", isDone: false },
       { task: "Find a job", isDone: true },
     ],
     volunteer_ids: [],
+    isReviewed: false,
+    isDistressed: false,
+    isNeedHelp: false,
   },
   {
     postalCode: 654321,
@@ -50,11 +59,14 @@
     mobileNumber: 12348765,
     medicalConditions: ["Diabetes", "Cancer"],
     bluetoothDeviceID: "1423",
-    statusList: [
+    taskList: [
       { task: "Take the train", isDone: true },
       { task: "Dance", isDone: false },
     ],
     volunteer_ids: [],
+    isReviewed: false,
+    isDistressed: false,
+    isNeedHelp: false,
   },
   {
     postalCode: 111111,
@@ -64,12 +76,15 @@
     homeNumber: 66666666,
     mobileNumber: 13245768,
     medicalConditions: ["Diabetes", "Cancer"],
-    bluetoothDeviceID: "1423",
-    statusList: [
+    bluetoothDeviceID: "1433",
+    taskList: [
       { task: "Take the train", isDone: true },
       { task: "Dance", isDone: false },
     ],
     volunteer_ids: [],
+    isReviewed: false,
+    isDistressed: false,
+    isNeedHelp: false,
   },
 ];
 
