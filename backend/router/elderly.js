@@ -12,16 +12,18 @@ router.post("/list", auth, async (req, res) => {
   res.json(elderList);
 });
 
+// input: _id, taskId
 router.patch("/todo", auth, async (req, res) => {
-  const response = await Elderly.updateOne(
-    {
-      _id: req.body._id,
-    },
-    {
-      colour: req.body.newColour,
+  await Elderly.findOne({ _id: req.body._id }, (elderly, err) => {
+    if (err) return;
+    for (const task of elderly.taskList) {
+      if (task._id === req.body.taskId) {
+        task.isDone = !task.isDone;
+      }
     }
-  );
-  console.log(response);
+    elderly.save();
+    console.log(elderly);
+  });
 
   res.json({ status: "ok", message: "updated" });
 });
