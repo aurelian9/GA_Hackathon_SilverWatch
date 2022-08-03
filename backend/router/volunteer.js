@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const volunteerSeed = require("./seedVolunteer");
+const seedVolunteer = require("./seedVolunteer");
 
 const Volunteer = require("../models/Volunteer");
 const auth = require("../middleware/auth");
