@@ -10,6 +10,29 @@ const auth = require("../middleware/auth");
 let refreshTokens = [];
 console.log(refreshTokens);
 
+router.post("/register", async (req, res) => {
+    try {
+      const admin = await Admin.findOne({ email: req.body.email });
+      if (admin) {
+        return res
+          .status(400)
+          .json({ status: "error", message: "email is taken" });
+      }
+  
+      const hash = await bcrypt.hash(req.body.password, 12);
+      const createdAdmin = await Admin.create({
+        email: req.body.email,
+        hash,
+      });
+  
+      console.log("successfully registered: ", createdAdmin);
+      res.json({ status: "ok", message: "successfully registered" });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ status: "error", message: "an error has occured" });
+    }
+  });
+
 router.post("/login", async (req, res) => {
     try {
       const admin = await Admin.findOne({ email: req.body.email });
