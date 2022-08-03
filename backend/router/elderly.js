@@ -6,6 +6,8 @@ const Elderly = require("../models/Elderly");
 const auth = require("../middleware/auth");
 const seedElderly = require("./seedElderly");
 
+const ObjectId = require("mongodb").ObjectId;
+
 router.post("/list", auth, async (req, res) => {
   const elderList = await Volunteer.find({ _id: req.body._id }).select(
     "elderly_ids"
@@ -15,18 +17,17 @@ router.post("/list", auth, async (req, res) => {
 
 // input: _id, taskId
 router.patch("/todo", auth, async (req, res) => {
-  await Elderly.findOne({ _id: req.body._id }, (elderly, err) => {
-    if (err) return;
-    for (const task of elderly.taskList) {
-      if (task._id === req.body.taskId) {
-        task.isDone = !task.isDone;
-      }
-    }
-    elderly.save();
-    console.log(elderly);
-  });
+  const elderly = await Elderly.findOne({ _id: req.body._id });
 
-  res.json({ status: "ok", message: "updated" });
+  const taskId = new ObjectId(req.body.taskId);
+  for (const task of elderly.taskList) {
+    if (taskId.equals(task._id)) {
+      task.isDone = !task.isDone;
+    }
+  }
+  elderly.save();
+
+  res.json({ status: "ok", elderly });
 });
 
 router.get("/seed", async (req, res) => {
