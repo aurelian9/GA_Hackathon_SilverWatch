@@ -86,7 +86,7 @@ router.post("/refresh", (req, res) => {
   }
 });
 
-router.post("/register", async (req, res) => {
+router.put("/register", async (req, res) => {
   try {
     const volunteer = await Volunteer.findOne({ email: req.body.email });
     if (volunteer) {
