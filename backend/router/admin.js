@@ -8,6 +8,7 @@ const Admin = require("../models/Admin");
 const Volunteer = require("../models/Volunteer");
 const Elder = require("../models/Elderly");
 const auth = require("../middleware/auth");
+const Elderly = require("../models/Elderly");
 
 let refreshTokens = [];
 console.log(refreshTokens);
@@ -78,6 +79,43 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.patch("/match", async (req, res) => {});
+router.patch("/match", async (req, res) => {
+  try {
+    const elderlyId = await Volunteer.findOne({ _id: req.body._id }).select(
+      "elderly_ids"
+    );
+    const volunIds = await Elderly.findOne({ _id: req.body.elderly_id }).select(
+      "volunteer_ids"
+    );
+
+    console.log(elderlyId);
+    console.log(volunIds);
+
+    if (!elderlyId.elderly_ids) {
+      elderlyId.elderly_ids = [];
+    }
+
+    if (!volunIds.volunteer_ids) {
+      volunIds.volunteer_ids = [];
+    }
+
+    if (
+      elderlyId.elderly_ids.includes(req.body.elderly_id) ||
+      volunIds.volunteer_ids.includes(req.body._id)
+    )
+      return;
+
+    elderlyId.elderly_ids.push(req.body._id);
+    volunIds.volunteer_ids.push(req.body.elderly_id);
+
+    elderlyId.save();
+    volunIds.save();
+
+    res.json({ elderlyId, volunIds });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ status: "error", message: "BRO ERROR IN /MATCH" });
+  }
+});
 
 module.exports = router;
