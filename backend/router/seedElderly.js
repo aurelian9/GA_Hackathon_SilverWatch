@@ -72,3 +72,5 @@
     volunteer_ids: [],
   },
 ];
+
+module.exports = seedElderly;

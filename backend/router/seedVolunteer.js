@@ -35,3 +35,5 @@
     name: "Arbok",
   },
 ];
+
+module.exports = seedVolunteer;

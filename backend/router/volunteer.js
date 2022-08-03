@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const volunteerSeed = require("./seedVolunteer");
 
 const Volunteer = require("../models/Volunteer");
 const auth = require("../middleware/auth");
@@ -117,4 +118,18 @@ router.delete("/logout", auth, async (req, res) => {
   res.status(204).json({ message: "successfully logged out" });
 });
 
-module.exports = router;
+router.get("/seed", async (req, res) => {
+  await Volunteer.deleteMany();
+
+  seed.forEach((volunteer) => {
+    volunteer.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+  });
+
+  await Volunteer.create(seed, (err, createdVolunteers) => {
+    console.log(createdVolunteers);
+
+    res.status(200).json(createdVolunteers);
+  });
+});
+
+router.module.exports = router;
