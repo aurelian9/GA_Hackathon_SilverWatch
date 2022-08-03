@@ -12,4 +12,18 @@ router.post("/list", auth, async (req, res) => {
   res.json(elderList);
 });
 
+router.patch("/todo", auth, async (req, res) => {
+  const response = await Elderly.updateOne(
+    {
+      _id: req.body._id,
+    },
+    {
+      colour: req.body.newColour,
+    }
+  );
+  console.log(response);
+
+  res.json({ status: "ok", message: "updated" });
+});
+
 module.exports = router;

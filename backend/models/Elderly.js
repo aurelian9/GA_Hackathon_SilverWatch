@@ -30,18 +30,32 @@ const ElderlySchema = new mongoose.Schema(
     },
     bluetoothDeviceID: {
       type: String,
-      required: true,
       unique: true,
     },
-    statusList: [
+    taskList: [
       {
         task: String,
         isDone: Boolean,
+        default: false,
         required: true,
       },
     ],
     volunteer_ids: {
       type: [String],
+    },
+    isReviewed: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    isDistressed: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    isNeedHelp: {
+      type: Boolean,
+      default: false,
       required: true,
     },
   },
