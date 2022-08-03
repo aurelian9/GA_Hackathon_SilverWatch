@@ -88,9 +88,6 @@ router.patch("/match", async (req, res) => {
       "volunteer_ids"
     );
 
-    console.log(elderlyId);
-    console.log(volunIds);
-
     if (!elderlyId.elderly_ids) {
       elderlyId.elderly_ids = [];
     }
@@ -111,7 +108,7 @@ router.patch("/match", async (req, res) => {
     elderlyId.save();
     volunIds.save();
 
-    res.json({ elderlyId, volunIds });
+    res.status(200).json({ elderlyId, volunIds });
   } catch (err) {
     console.log(err);
     res.status(400).json({ status: "error", message: "BRO ERROR IN /MATCH" });
