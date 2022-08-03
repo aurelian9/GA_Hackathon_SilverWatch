@@ -20,7 +20,7 @@ const ElderlySchema = new mongoose.Schema(
     },
     homeNumber: {
       type: Number,
-      requried: true,
+      required: true,
     },
     mobileNumber: {
       type: Number,
