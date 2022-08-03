@@ -111,11 +111,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/users", auth, async (req, res) => {
-  const users = await User.find().select("username");
-  res.json(users);
-});
-
 router.delete("/logout", auth, async (req, res) => {
   refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
   console.log("successfully logged out");

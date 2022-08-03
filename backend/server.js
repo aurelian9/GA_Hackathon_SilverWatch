@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 connectDB(process.env.MONGODB_URI);
 
 app.use("/volunteer", volunteers);
-app.use("/elderly", elderly);
+app.use("/elder", elderly);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT);

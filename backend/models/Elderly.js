@@ -40,9 +40,13 @@ const ElderlySchema = new mongoose.Schema(
         required: true,
       },
     ],
+    volunteer_ids: {
+      type: [String],
+      required: true,
+    },
   },
   { timestamps: true },
-  { collection: "elderly" }
+  { collection: "neighbourwatch elderly" }
 );
 
 const Elderly = mongoose.model("Elderly", ElderlySchema);
