@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
           .json({ status: "error", message: "volunteer is not found" });
       }
   
-      const result = await bcrypt.compare(req.body.password, user.hash);
+      const result = await bcrypt.compare(req.body.password, admin.hash);
   
       if (!result) {
         console.log("email or password error");
