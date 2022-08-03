@@ -58,4 +58,31 @@ router.patch("/help", auth, async (req, res) => {
   }
 });
 
+router.put("/new", async (req, res) => {
+  const addElderly = new Elderly({
+    name: req.body.name,
+    postalCode: req.body.postalCode,
+    floor: req.body.floor,
+    unit: req.body.unit,
+    homeNumber: req.body.homeNumber,
+    mobileNumber: req.body.mobileNumber || null,
+    medicalConditions: req.body.medicalConditions || [],
+    bluetoothDeviceID: req.body.bluetoothDeviceID || "",
+    taskList: req.body.taskList || [],
+    volunteer_ids: req.body.volunteer_ids || [],
+    isReviewed: req.body.isReviewed,
+    isDistressed: req.body.isDistressed,
+    isNeedHelp: req.body.isNeedHelp,
+  });
+
+  try {
+    await addElderly.save();
+
+    res.json({ status: "ok", message: "added" });
+  } catch (error) {
+    console.log("PUT /elder/new error: " + error.message);
+    res.status(400).json({ status: "error", message: "an error has occured" });
+  }
+});
+
 module.exports = router;
