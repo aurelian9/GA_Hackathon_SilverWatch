@@ -34,10 +34,8 @@ const ElderlySchema = new mongoose.Schema(
     },
     taskList: [
       {
-        task: String,
-        isDone: Boolean,
-        default: false,
-        required: true,
+        task: { type: String, required: true, default: "" },
+        isDone: { type: Boolean, required: true, default: false },
       },
     ],
     volunteer_ids: {

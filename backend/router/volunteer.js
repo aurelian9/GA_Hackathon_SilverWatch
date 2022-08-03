@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
     }
 
     // match the password
-    const result = await bcrypt.compare(req.body.password, user.hash);
+    const result = await bcrypt.compare(req.body.password, volunteer.hash);
 
     if (!result) {
       console.log("email or password error");
